@@ -1,0 +1,10 @@
+
+[Unit]
+Description=Execució programada del servei
+[Timer]
+OnActiveSec=5min
+OnUnitActiveSec=5min
+# Unit=monitoritzar_logs.service NO es necesario ya que un timer busca directamente un .service de su mismo nombre
+Persistent=true
+[Install]
+WantedBy=timers.target

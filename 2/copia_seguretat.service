@@ -1,0 +1,14 @@
+[Unit]
+Description=Servei de Copia de seguretat
+After=network.target
+[Service]
+
+ExecStart=/usr/local/bin/copia_seguretat.sh ${directoris}
+EnvironmentFile=/etc/copia_seguretat.conf
+User=root
+Type=oneshot
+StandardOutput=append:/var/log/copia_seguretat_std.log
+StandardError=append:/var/log/copia_seguretat_err.log
+
+[Install]
+WantedBy=multi-user.target

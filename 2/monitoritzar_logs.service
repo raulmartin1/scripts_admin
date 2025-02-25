@@ -1,0 +1,15 @@
+
+[Unit]
+Description=Servei per monitortizar logs
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/monitoritzar_logs.sh ${files}
+EnvironmentFile=/etc/monitoritzar.conf
+User=root
+StandardOutput=append:/var/log/monitorizar_logs.log
+StandardError=append:/var/log/monitoritzar_logs.log
+[Install]
+
+WantedBy=multi-user.target
+

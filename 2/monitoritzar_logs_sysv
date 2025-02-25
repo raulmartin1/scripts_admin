@@ -1,0 +1,46 @@
+#!/bin/bash
+
+# Definim el path per assegurar-nos que tenim accés als binaris essencials
+path=/bin:/sbin:/usr/bin:/usr/sbin
+
+# Ruta de l'script que volem executar com a servei
+servei_script="/usr/local/bin/monitoritzar_logs.sh"
+
+# Fitxer on es guardarà el pid del procés (per gestionar-lo correctament)
+# pid_file="/var/run/monitoritzar_logs.pid"
+
+# Nom del servei (s'utilitzarà en missatges de depuració i logs)
+servei_name="monitoritzar_logs"
+
+# Fitxer de log on es guardarà la sortida del servei
+log_file="/var/log/$servei_name.log"
+
+if [ ! -x "$servei_script" ]; then
+    echo "Error: No s'ha trobat $servei_script o no te permis d'execucio" | tee -a "$log_file"
+    exit 1
+fi
+
+case "$1" in
+    start)
+        echo "Start del servei: $servei_name" | tee -a "$log_file"
+        $servei_script "-u cron -u rsyslog -u redys" >> "$log_file" 2>&1 &
+        ;;
+    status)
+    	echo "Status del servei: $servei_name" | tee -a "$log_file"
+    	;;
+    restart)
+        echo "Restart del servei $servei_name" | tee -a "$log_file"
+    	;;
+    stop)
+        echo "Stop del servei $servei_name" | tee -a "$log_file"
+        ;;
+    *)
+    	echo "Estructura: $0 [start/status/restart/stop] <args>"
+    	exit 1
+    	;;
+   
+esac
+   
+exit 0
+    
+

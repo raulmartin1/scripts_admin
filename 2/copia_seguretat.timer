@@ -1,0 +1,10 @@
+[Unit]
+Description=Script Copia Seguretat a les 10 de la nit
+
+[Timer]
+OnCalendar=*-*-* 22:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+
