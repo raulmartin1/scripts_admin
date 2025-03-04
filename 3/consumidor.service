@@ -1,0 +1,27 @@
+[Unit]
+Description=Servei que consumeix CPU i memoria
+After=network.target
+
+[Service]
+ExecStart=/home/GSX/consumidor.sh
+Restart=always  
+RestartSec=5  	
+KillMode=control-group
+SuccessExitStatus=0 SIGUSR2
+RemainAfterExit=no
+User=root
+
+CPUAccounting=true
+CPUQuota=50%
+CPUWeight=50 
+
+
+#MemoryMax=512M  # Limita la memòria a 512MB
+MemoryMax=512M
+MemoryHigh=480M
+
+StandardOutput=append:/var/log/consumidor.log
+StandardError=append:/var/log/consumidor.log
+
+[Install]
+WantedBy=multi-user.target
